@@ -1,0 +1,6 @@
+build/
+release/
+*.o
+*.bin
+!assets/zynq_fsbl.elf
+.DS_Store

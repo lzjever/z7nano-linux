@@ -1,0 +1,85 @@
+--- /dev/null
++++ b/arch/arm/boot/dts/xilinx/zynq-z7-nano.dts
+@@ -0,0 +1,55 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Device Tree for MicroPhase Z7-Nano R20 board (XC7Z020)
++ * Console on UART0, 512MB DDR, RTL8211F PHY at MDIO addr 1.
++ */
++/dts-v1/;
++#include "zynq-7000.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	model = "MicroPhase Z7-Nano R20";
++	compatible = "microphase,zynq-z7-nano", "xlnx,zynq-7000";
++
++	aliases {
++		ethernet0 = &gem0;
++		serial0 = &uart0;
++		spi0 = &qspi;
++		mmc0 = &sdhci0;
++	};
++
++	memory@0 {
++		device_type = "memory";
++		reg = <0x0 0x20000000>;
++	};
++
++	chosen {
++		bootargs = "";
++		stdout-path = "serial0:115200n8";
++	};
++
++	usb_phy0: phy0 {
++		#phy-cells = <0>;
++		compatible = "usb-nop-xceiv";
++	};
++};
++
++&clkc {
++	ps-clk-frequency = <33333333>;
++};
++
++&gem0 {
++	status = "okay";
++	phy-mode = "rgmii-id";
++	phy-handle = <&ethernet_phy>;
++
++	ethernet_phy: ethernet-phy@1 {
++		reg = <1>;
++		reset-gpios = <&gpio0 46 GPIO_ACTIVE_LOW>;
++	};
++};
++
++&qspi {
++	bootph-all;
++	status = "okay";
++};
++
++&sdhci0 {
++	bootph-all;
++	status = "okay";
++};
++
++&uart0 {
++	bootph-all;
++	status = "okay";
++};
++
++&usb0 {
++	status = "okay";
++	dr_mode = "host";
++	usb-phy = <&usb_phy0>;
++};
+--- a/arch/arm/boot/dts/xilinx/Makefile
++++ b/arch/arm/boot/dts/xilinx/Makefile
+@@ -24,6 +24,7 @@
+ 	zynq-zturn.dtb \
+ 	zynq-zturn-v5.dtb \
+ 	zynq-zybo.dtb \
+ 	zynq-zybo-z7.dtb \
++	zynq-z7-nano.dtb \
+ 	zynq-cc108.dtb \
+ 	zynq-microzed.dtb \
+ 	zynq-parallella.dtb \
