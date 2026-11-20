@@ -29,8 +29,8 @@ Two paths are supported. Choose one.
 
 ```bash
 # 1. Download the latest release image and its checksum
-wget https://github.com/<owner>/z7nano-linux/releases/latest/download/z7nano-sd.img.xz
-wget https://github.com/<owner>/z7nano-linux/releases/latest/download/z7nano-sd.img.xz.sha256
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz.sha256
 
 # 2. Verify the download
 sha256sum -c z7nano-sd.img.xz.sha256
@@ -49,7 +49,7 @@ configuration.
 ### Path B: Build from source
 
 ```bash
-git clone https://github.com/<owner>/z7nano-linux.git
+git clone https://github.com/lzjever/z7nano-linux.git
 cd z7nano-linux
 
 make deps        # Install the cross-toolchain and build packages (uses sudo)

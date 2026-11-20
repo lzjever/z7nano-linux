@@ -18,8 +18,8 @@ release contains an SD card image and its checksum:
 | `z7nano-sd.img.xz.sha256` | SHA256 checksum of the image |
 
 ```bash
-wget https://github.com/<owner>/z7nano-linux/releases/latest/download/z7nano-sd.img.xz
-wget https://github.com/<owner>/z7nano-linux/releases/latest/download/z7nano-sd.img.xz.sha256
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz.sha256
 ```
 
 ### Step 2: Verify the checksum
