@@ -85,6 +85,40 @@ Log in as `root` with password `root`, then change the password immediately:
 passwd
 ```
 
+### Step 5 (optional): Expand the root partition
+
+The pre-built image creates a 1.5 GB rootfs partition regardless of the physical
+card capacity. If the card is larger than 2 GB, expand the partition and filesystem
+to use the full capacity. Run these commands on the build host with the card
+inserted (not on the target board):
+
+```bash
+# Install the partition resize utility (one-time)
+sudo apt install cloud-guest-utils
+
+# Expand partition 2 to fill the card
+sudo growpart /dev/sdX 2
+
+# Expand the ext4 filesystem to fill the partition
+sudo e2fsck -f /dev/sdX2
+sudo resize2fs /dev/sdX2
+```
+
+Verify the result:
+
+```bash
+lsblk /dev/sdX
+df -h /dev/sdX2
+```
+
+The `SIZE` column in `lsblk` should now match the card's labeled capacity.
+If the card is already at its target size, `growpart` reports `NOCHANGE` and
+`resize2fs` reports that the filesystem is already the requested size -- both
+are safe to run multiple times.
+
+This step is unnecessary if the card was populated with `make sd`, which uses
+the full card capacity by default.
+
 ## Manual SD Card Setup
 
 As an alternative to flashing the full image, a card can be partitioned and populated
