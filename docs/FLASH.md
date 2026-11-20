@@ -129,7 +129,7 @@ this with `make sd DEV=/dev/sdX`; the equivalent manual procedure follows.
 
 | Partition | Type | Size | Contents |
 |---|---|---|---|
-| 1 | FAT32 (LBA), bootable | 512 MB | `BOOT.BIN`, `boot.scr`, `zImage`, `zynq-z7nano.dtb` |
+| 1 | FAT32 (LBA), bootable | 512 MB | `BOOT.BIN`, `zImage`, `zynq-z7-nano.dtb` |
 | 2 | ext4 | Remaining capacity | Debian root filesystem |
 
 ### Creating the partitions
@@ -159,7 +159,7 @@ sudo mount /dev/sdX2 /mnt/z7root
 sudo cp build/output/BOOT.BIN /mnt/z7boot/
 sudo cp build/output/boot.scr /mnt/z7boot/
 sudo cp build/output/zImage /mnt/z7boot/
-sudo cp build/output/zynq-z7nano.dtb /mnt/z7boot/
+sudo cp build/output/zynq-z7-nano.dtb /mnt/z7boot/
 
 # Root filesystem
 sudo tar -xzf build/output/rootfs.tar.gz -C /mnt/z7root
@@ -246,7 +246,7 @@ devmem() { busybox devmem "$@"; }
 devmem 0xF8000004 32 0x0000DF0D   # SLCR_UNLOCK: allow SLCR writes
 devmem 0xF8000240 32 0x00000000   # FPGA_RST_CTRL: deassert all PL resets
 devmem 0xF8000170 32 0x0010000A   # FPGA0_CLK_CTRL: FCLK0 = IO PLL / 10 = 100 MHz
-devmem 0xF8000180 32 0x00000001   # FPGA0_THR_CNT: start the FCLK0 counter
+devmem 0xF8000178 32 0x00000001   # FPGA0_THR_CNT: start the FCLK0 counter
 devmem 0xF8000900 32 0x0000000F   # LVL_SHFTR_EN: enable all PS-PL level shifters
 devmem 0xF8000000 32 0x0000767B   # SLCR_LOCK: re-lock SLCR
 ```
@@ -259,7 +259,7 @@ layouts):
 | `0xF8000004` | `SLCR_UNLOCK` | `0xDF0D` | Unlock SLCR for writing |
 | `0xF8000240` | `FPGA_RST_CTRL` | `0x0` | Deassert PL external resets |
 | `0xF8000170` | `FPGA0_CLK_CTRL` | `0x0010000A` | FCLK0 source and divisor (100 MHz) |
-| `0xF8000180` | `FPGA0_THR_CNT` | `0x1` | Start the FCLK0 threshold counter |
+| `0xF8000178` | `FPGA0_THR_CNT` | `0x1` | Start the FCLK0 threshold counter |
 | `0xF8000900` | `LVL_SHFTR_EN` | `0xF` | Enable all four level shifters |
 | `0xF8000000` | `SLCR_LOCK` | `0x767B` | Re-lock SLCR |
 

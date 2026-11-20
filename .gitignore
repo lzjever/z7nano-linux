@@ -4,3 +4,5 @@ release/
 *.bin
 !assets/zynq_fsbl.elf
 .DS_Store
+
+config/local.mk

@@ -29,14 +29,14 @@ Two paths are supported. Choose one.
 
 ```bash
 # 1. Download the latest release image and its checksum
-wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz
-wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-sd.img.xz.sha256
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-linux-2026.11.20.img
+wget https://github.com/lzjever/z7nano-linux/releases/latest/download/z7nano-linux-2026.11.20.img.sha256
 
 # 2. Verify the download
-sha256sum -c z7nano-sd.img.xz.sha256
+sha256sum -c z7nano-linux-2026.11.20.img.sha256
 
 # 3. Write it to an SD card (replace /dev/sdX with your actual device)
-xzcat z7nano-sd.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
+xzcat z7nano-linux-2026.11.20.img | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
 ```
 
 Insert the card, set the board boot-mode jumper to SD boot, connect a serial terminal

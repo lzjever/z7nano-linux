@@ -25,6 +25,13 @@ SIZE=$(lsblk -no SIZE "$DEV" | head -1)
 echo "Target: $DEV ($MODEL, $SIZE)"
 echo ""
 echo "WARNING: This will ERASE ALL DATA on $DEV"
+# Preflight: verify all artifacts exist before touching the card
+echo "Checking artifacts..."
+for f in "${OUTPUT_DIR}/BOOT.BIN" "${OUTPUT_DIR}/zImage" "${OUTPUT_DIR}/zynq-z7-nano.dtb" "${OUTPUT_DIR}/rootfs.tar.gz"; do
+    [ -f "$f" ] || { echo "ERROR: Missing $f"; echo "  Run 'make all' first."; exit 1; }
+done
+echo "All artifacts present."
+
 read -p "Type 'yes' to continue: " CONFIRM
 [ "$CONFIRM" = "yes" ] || { echo "Aborted."; exit 1; }
 

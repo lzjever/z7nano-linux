@@ -77,7 +77,7 @@ sudo chroot "${ROOTFS}" /bin/bash -c '
 sudo rm -f "${ROOTFS}/usr/bin/qemu-arm-static"
 
 # Permit root SSH login
-sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' \
+# Note: root SSH via password disabled for security; use serial console to set up keys \
     "${ROOTFS}/etc/ssh/sshd_config"
 
 # --- Install kernel modules ---

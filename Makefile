@@ -48,7 +48,7 @@ uboot: $(UBOOT_DIR)/.built
 # ============================================================
 # Step 2: Linux Kernel
 # ============================================================
-$(KERNEL_DIR)/.built:
+$(KERNEL_DIR)/.built: $(OUTPUT_DIR)/u-boot-dtb.bin
 	@./scripts/02-kernel.sh
 
 kernel: $(KERNEL_DIR)/.built
@@ -57,7 +57,7 @@ kernel: $(KERNEL_DIR)/.built
 # ============================================================
 # Step 3: Debian Rootfs
 # ============================================================
-$(ROOTFS_DIR)/.built:
+$(ROOTFS_DIR)/.built: $(KERNEL_DIR)/.built
 	@./scripts/03-rootfs.sh
 
 rootfs: $(ROOTFS_DIR)/.built
@@ -66,7 +66,7 @@ rootfs: $(ROOTFS_DIR)/.built
 # ============================================================
 # Step 4: BOOT.BIN
 # ============================================================
-$(OUTPUT_DIR)/BOOT.BIN: $(UBOOT_DIR)/.built
+$(OUTPUT_DIR)/BOOT.BIN: $(UBOOT_DIR)/.built $(wildcard assets/zynq_fsbl.elf)
 	@./scripts/04-bootbin.sh
 
 bootbin: $(OUTPUT_DIR)/BOOT.BIN
