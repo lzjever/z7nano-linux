@@ -56,8 +56,7 @@ Name=eth0
 Name=end0
 
 [Network]
-DHCP=no
-Address=192.168.1.10/24
+DHCP=yes
 EOF
 
 # DNS
@@ -76,8 +75,8 @@ sudo chroot "${ROOTFS}" /bin/bash -c '
 ' 2>&1 | tail -3
 sudo rm -f "${ROOTFS}/usr/bin/qemu-arm-static"
 
-# Permit root SSH login
-# Note: root SSH via password disabled for security; use serial console to set up keys \
+# Permit root SSH login via password (dev board default)
+sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' \
     "${ROOTFS}/etc/ssh/sshd_config"
 
 # --- Install kernel modules ---
