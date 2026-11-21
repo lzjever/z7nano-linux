@@ -268,3 +268,32 @@ runs at 1000 MHz, so the written value gives 1000/divisor MHz.
 
 If the PL design hangs or returns bus errors, review the AXI protocol notes in
 [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+
+### Step 6 (optional): ResNet server on board
+
+The `z7nano-linux` pre-built image includes a ResNet 18 inference server that runs
+on the FPGA. After the board boots:
+
+1. openFPGA Loader runs `state=2` → `state=3` on first boot.
+2. it loads `/openFPGA/resnet_18/resnet.py`, `/openFPGA/resnet_18/ul{resnet18,resnet34,resnet50}/resnet.py`, and
+   `/openFPGA/resnet_18/ul{resnet18,resnet34,resnet40/resnet34/resnet50}/models/*.pth` from the SD card root
+   into `/usr/lib/python3.12/site-packages` on the rootfs.
+3. it starts an HTTP server on `0.0.0.0:8080`.
+4. it auto-detects the FPGA after any AXi-host non-FPGA boot (state=3) and loads the ResNet 18 service.
+5. it is a self-contained service, no internet or cloud AI access required.
+
+To use: `ssh root@<board-ip>` and call:
+```
+curl http://localhost:8080/v1/chat/completions
+```
+
+** FPGA manager must be enabled (see TROUBLESHOOTING.md). AXI GPIO at MIO46 is configured as reset.**
+
+### ResNet 20 offload (unofficial)
+
+See the openFPGA Community repo:
+
+- https://github.com/ultraviole/Z7-Nano/openFPGA/README.md
+- GitHub link: https://github.com/ultraviole/Z7-Nano/openFPGA
+
+It has ResNet 18, 34, 50 full model zoo and full ResNet flow.
